@@ -8,7 +8,7 @@ Usage:
 
 import sys
 
-from input import user_input
+from input import train_input
 from rl_src.make_env import make_env
 from rl_src.train import train_model
 from utils.process_IO import make_model_name, create_directory_if_not_exists
@@ -19,7 +19,7 @@ if len(sys.argv) > 1:
     command = sys.argv[1]
 
 if command == "train":
-    env_options = user_input()
+    env_options = train_input()
     print("detected env options", env_options)
 
     # make environment
@@ -54,6 +54,6 @@ if command == "train":
                         )
 
 if command == "evaluate":
-    env_options = user_input()
+    env_options = train_input()
     print("detected env options", env_options)
     env = make_env(map_path=env_options['map_path'], PPO=env_options['algorithm'] == 'PPO')

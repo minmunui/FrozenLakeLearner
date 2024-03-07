@@ -3,7 +3,7 @@ Description : This file contains the default input for the model, you can edit t
 """
 
 
-def user_input():
+def train_input():
     """
     This function is used to get the user input from the user
     you can modify the default input as per your requirements.
@@ -22,7 +22,7 @@ def user_input():
     }
 
 
-default_input = {
+Default_Train_Input = {
     'model_name': '',
     'algorithm': 'PPO',
     'map_path': None,
@@ -33,11 +33,11 @@ default_input = {
 
 
 def make_input_object():
-    required_input = default_input.keys()
+    required_input = Default_Train_Input.keys()
     result = {}
     for key in required_input:
-        if key in user_input:
-            result[key] = user_input[key]
+        if key in train_input:
+            result[key] = train_input[key]
         else:
-            result[key] = default_input[key]
+            result[key] = Default_Train_Input[key]
     return result
