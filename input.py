@@ -12,13 +12,18 @@ def train_input():
     """
     return {
         'model_name': '',
-        'algorithm': 'PPO',
+        'algorithm': {
+            'name': 'PPO',
+            'hyperparameters': {
+                'total_timesteps': 500,
+                'learning_rate': 0.0001,
+                'batch_size': 64,
+                'gamma': 0.99,
+                'n_steps': 2048,
+            }
+        },
         'map_path': '',
         'map_size': '5',
-        'hyperparameters': {
-            'total_timestep': 50000,
-            'learning_rate': 0.0001
-        }
     }
 
 
@@ -27,9 +32,23 @@ Default_Train_Input = {
     'algorithm': 'PPO',
     'map_path': None,
     'map_size': '5*5',
-    'total_timestep': 10000,
+    'total_timesteps': 10000,
     'learning_rate': 0.0001
 }
+
+
+def evaluate_input():
+    return {
+        'model_path': '',
+        'map_path': '',
+    }
+
+
+def simulate_input():
+    return {
+        'model_path': '',
+        'map_path': '',
+    }
 
 
 def make_input_object():
