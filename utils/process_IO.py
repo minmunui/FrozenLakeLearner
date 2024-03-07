@@ -1,15 +1,47 @@
-def model_name(input_object: dict):
-    if input_object['model_name'] == '':
-        return f"{input_object['step']}_{input_object['learning_rate']}"
+import os
+
+
+def simplify_key(key: str):
+    """
+    This function takes a string and returns a simplified version of the string
+    :param key:
+    :return:
+    """
+    key = key.lower()
+    if "_" in key:
+        temp = key.split("_")
+        result = ""
+        for i in temp:
+            result += i[0]
+        return result
     else:
-        return input_object['model_name']
+        if len(key) > 1:
+            return key[0:1]
+        else:
+            return key
+
+
+def make_model_name(hyperparameters: dict):
+    """
+    This function takes a dictionary of hyperparameters and returns a string
+    :param hyperparameters:
+    :return:
+    """
+    name = ""
+    for key in hyperparameters:
+        name += f"{simplify_key(key)}_{hyperparameters[key]}_"
+    return name
 
 
 def make_model_directory(input_object: dict):
     dir_path = f"models/${input_object['map_name']}/${input_object['algorithm']}"
-    import os
     if not os.path.join(dir_path):
         os.makedirs(dir_path)
+
+
+def create_directory_if_not_exists(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
 
 
 def process_input(file_path: str):
