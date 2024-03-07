@@ -8,10 +8,11 @@ Usage:
 
 import sys
 
-from input import train_input, evaluate_input
+from input import train_input, evaluate_input, simulate_input
 from rl_src.make_env import make_env
 from rl_src.train import train_model
 from utils.process_IO import make_model_name, create_directory_if_not_exists
+from rl_src.evaluate import print_evaluate, evaluate_model
 
 
 def main():
@@ -72,17 +73,31 @@ def main():
         loaded_model = None
 
         if env_options['algorithm'] == 'PPO':
-
             from stable_baselines3 import PPO
 
             loaded_model = PPO.load(model_path)
         # evaluate model
-        from rl_src.evaluate import print_evaluate
+
         print_evaluate(env=env, model=loaded_model)
 
 
     elif command == "simulate":
-        pass
+        env_options = simulate_input()
+        print("detected env options", env_options)
+
+        env = make_env(map_path=env_options['map_path'], PPO=env_options['algorithm'] == 'PPO', render_mode='human')
+
+        model_path = env_options['model_path']
+
+        print("model path : ", model_path)
+        loaded_model = None
+
+        if env_options['algorithm'] == 'PPO':
+            from stable_baselines3 import PPO
+
+            loaded_model = PPO.load(model_path)
+        # simulate model
+        evaluate_model(env=env, model=loaded_model)
 
     else:
         print("Invalid command | Please use 'train', 'evaluate' or 'simulate' as command")

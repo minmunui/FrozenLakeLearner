@@ -1,7 +1,7 @@
 from utils.utils import print_map
 
 
-def make_env(map_path: str = None, random_size: int = 5, PPO: bool = False ):
+def make_env(map_path: str = None, random_size: int = 5, PPO: bool = False, render_mode: str = None):
     """
     This function is used to create the environment for the agent to interact with.
     :param map_path: path to the map file
@@ -20,7 +20,7 @@ def make_env(map_path: str = None, random_size: int = 5, PPO: bool = False ):
     print("detected map : ")
     print_map(map_for_env)
 
-    env = gym.make('FrozenLake-v1', desc=map_for_env, map_name=None, is_slippery=False)
+    env = gym.make('FrozenLake-v1', desc=map_for_env, map_name=None, is_slippery=False, render_mode=render_mode)
     if PPO:
         env = DummyVecEnv([lambda: env])
     return env

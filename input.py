@@ -15,7 +15,7 @@ def train_input():
         'algorithm': {
             'name': 'PPO',
             'hyperparameters': {
-                'total_timesteps': 500,
+                'total_timesteps': 50000,
                 'learning_rate': 0.0001,
                 'batch_size': 64,
                 'gamma': 0.99,
@@ -40,7 +40,7 @@ Default_Train_Input = {
 def evaluate_input():
     return {
         'algorithm': 'PPO',
-        'model_path': 'models/PPO/_5X5_random/tt_500_lr_0.0001_bs_64_g_0.99_ns_2048_.zip',
+        'model_path': 'models/PPO/_5X5_random/tt_50000_lr_0.0001_bs_64_g_0.99_ns_2048_.zip',
         'map_path': 'maps/_5X5_normal',
     }
 
@@ -48,7 +48,7 @@ def evaluate_input():
 def simulate_input():
     return {
         'algorithm': 'PPO',
-        'model_path': 'models/PPO/_5X5_random/tt_500_lr_0.0001_bs_64_g_0.99_ns_2048_.zip',
+        'model_path': 'models/PPO/_5X5_random/tt_50000_lr_0.0001_bs_64_g_0.99_ns_2048_.zip',
         'map_path': 'maps/_5X5_normal',
     }
 

@@ -1,7 +1,4 @@
-from stable_baselines3 import PPO
 from stable_baselines3.common.evaluation import evaluate_policy
-
-from rl_src.make_env import make_env
 
 
 def evaluate_model(model, env):
