@@ -12,7 +12,7 @@ def make_env(map_path: str = None, random_size: int = 5, PPO: bool = False ):
     import gymnasium as gym
     from stable_baselines3.common.vec_env import DummyVecEnv
 
-    if map_path is not '':
+    if map_path != '':
         map_for_env = load_map(map_path)
     else:
         map_for_env = get_random_map(size=random_size)
