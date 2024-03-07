@@ -1,4 +1,4 @@
-def make_env(map_path: str = None, random_size: int = 5, PPO: bool = False, ):
+def make_env(map_path: str = None, random_size: int = 5, PPO: bool = False ):
     """
     This function is used to create the environment for the agent to interact with.
     :param map_path: path to the map file
@@ -14,13 +14,15 @@ def make_env(map_path: str = None, random_size: int = 5, PPO: bool = False, ):
     else:
         map_for_env = get_random_map(size=random_size)
 
+    print("detected map : ", map_for_env)
+
     env = gym.make('FrozenLake-v1', desc=map_for_env, map_name=None, is_slippery=False)
     if PPO:
         env = DummyVecEnv([lambda: env])
     return env
 
 
-def load_map(map_path: str = '/maps/_5X5/empty.txt'):
+def load_map(map_path: str = '/maps/_5X5/_5X5_empty.txt'):
     """
     This function is used to load the map from the file.
     :param map_path:
