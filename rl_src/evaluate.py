@@ -9,11 +9,6 @@ def evaluate_model(model, env):
     return mean_reward, std_reward
 
 
-def print_evaluate(model_path: str, map_path: str = None, is_PPO: bool = False):
-    env = make_env(map_path=map_path, PPO=True)
-    if is_PPO:
-        model = PPO.load("ppo_frozenlake")
-    else:
-        model = PPO.load(model_path)
+def print_evaluate(env, model):
     mean_reward, std_reward = evaluate_model(model, env)
     print(f"Mean reward: {mean_reward} +/- {std_reward}")

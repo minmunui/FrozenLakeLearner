@@ -39,15 +39,17 @@ Default_Train_Input = {
 
 def evaluate_input():
     return {
-        'model_path': '',
-        'map_path': '',
+        'algorithm': 'PPO',
+        'model_path': 'models/PPO/_5X5_random/tt_500_lr_0.0001_bs_64_g_0.99_ns_2048_.zip',
+        'map_path': 'maps/_5X5_normal',
     }
 
 
 def simulate_input():
     return {
-        'model_path': '',
-        'map_path': '',
+        'algorithm': 'PPO',
+        'model_path': 'models/PPO/_5X5_random/tt_500_lr_0.0001_bs_64_g_0.99_ns_2048_.zip',
+        'map_path': 'maps/_5X5_normal',
     }
 
 

@@ -14,7 +14,8 @@ from rl_src.train import train_model
 from utils.process_IO import make_model_name, create_directory_if_not_exists
 
 
-def main(command):
+def main():
+    command = sys.argv[1]
     if command == "train":
         env_options = train_input()
         print("detected env options", env_options)
@@ -33,9 +34,11 @@ def main(command):
         # make model directory
         map_name = env_options['map_path'].split('/')[-1].split('.')[0]
         if env_options['map_path'] == "":
-            dir_to_save = f"models/{env_options['algorithm']['name']}/random_{env_options['map_size']}X{env_options['map_size']}"
+            map_name = f"_{env_options['map_size']}X{env_options['map_size']}_random"
         else:
-            dir_to_save = f"models/{env_options['algorithm']['name']}/{map_name}"
+            map_name = map_name.split('/')[-1].split('.')[0]
+
+        dir_to_save = f"models/{env_options['algorithm']['name']}/{map_name}"
         print("directory to save model : ", dir_to_save)
 
         # make log directory
@@ -60,7 +63,22 @@ def main(command):
     elif command == "evaluate":
         env_options = evaluate_input()
         print("detected env options", env_options)
+
         env = make_env(map_path=env_options['map_path'], PPO=env_options['algorithm'] == 'PPO')
+
+        model_path = env_options['model_path']
+
+        print("model path : ", model_path)
+        loaded_model = None
+
+        if env_options['algorithm'] == 'PPO':
+
+            from stable_baselines3 import PPO
+
+            loaded_model = PPO.load(model_path)
+        # evaluate model
+        from rl_src.evaluate import print_evaluate
+        print_evaluate(env=env, model=loaded_model)
 
 
     elif command == "simulate":
@@ -71,11 +89,11 @@ def main(command):
         return
 
 
-if len(sys.argv) != 2:
+if len(sys.argv) < 2:
     print("Invalid number of arguments")
     print("Usage: python main.py train")
     print("Usage: python main.py evaluate")
     print("Usage: python main.py simulate")
 
 else:
-    main(sys.argv[1])
+    main()
