@@ -8,7 +8,10 @@ Usage:
 
 import sys
 
-from input import train_input, evaluate_input, simulate_input
+from input_evaluate import evaluate_input
+from input_simulate import simulate_input
+from input_train import train_input
+
 from rl_src.make_env import make_env
 from rl_src.train import train_model
 from utils.process_IO import make_model_name, create_directory_if_not_exists
@@ -40,11 +43,10 @@ def main():
             map_name = map_name.split('/')[-1].split('.')[0]
 
         dir_to_save = f"models/{env_options['algorithm']['name']}/{map_name}"
-        print("directory to save model : ", dir_to_save)
 
         # make log directory
         dir_to_log = f"logs/{env_options['algorithm']['name']}/{map_name}/{model_name}"
-        print("directory to save logs : ", dir_to_log)
+
 
         # if directory does not exist then create it
         create_directory_if_not_exists(dir_to_save)
@@ -59,6 +61,10 @@ def main():
                     tensorboard_log=dir_to_log,
                     hyperparameters=env_options['algorithm']['hyperparameters']
                     )
+
+        print("directory to save model : ", dir_to_save)
+        print("directory to save logs : ", dir_to_log)
+
 
 
     elif command == "evaluate":

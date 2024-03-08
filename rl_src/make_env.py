@@ -26,7 +26,7 @@ def make_env(map_path: str = None, random_size: int = 5, PPO: bool = False, rend
     return env
 
 
-def load_map(map_path: str = '/maps/_5X5/_5X5_empty.txt'):
+def load_map(map_path: str = '/custom_maps/_5X5/_5X5_empty.txt'):
     """
     This function is used to load the map from the file.
     :param map_path:
