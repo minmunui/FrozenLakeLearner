@@ -4,100 +4,38 @@ This file is the main file to run the training and evaluation of the model
 Usage:
     python main.py train
     python main.py evaluate
+    python main.py simulate
+    python main.py train_in_maps
 """
 
 import sys
 
-from input import train_input, evaluate_input, simulate_input
-from rl_src.make_env import make_env
-from rl_src.train import train_model
-from utils.process_IO import make_model_name, create_directory_if_not_exists
-from rl_src.evaluate import print_evaluate, evaluate_model
+from input_evaluate import evaluate_input
+from input_simulate import simulate_input
+from input_train import train_input
+
+from rl_src.evaluate import evaluate_command
+from rl_src.train import train_command
 
 
 def main():
     command = sys.argv[1]
     if command == "train":
+        train_command()
+
+    elif command == "evaluate":
+        evaluate_command(gui_render=False, option=evaluate_input())
+
+    elif command == "train_in_maps":
+        from rl_src.iterate import train_in_maps
         env_options = train_input()
         print("detected env options", env_options)
 
-        # make environment
-        env = make_env(map_path=env_options['map_path'], PPO=env_options['algorithm']['name'] == 'PPO')
-
-        # make model name
-        if env_options['model_name'] == '' or 'model_name' not in env_options:
-            model_name = make_model_name(env_options['algorithm']['hyperparameters'])
-        else:
-            model_name = env_options['model_name']
-
-        print("model name : ", model_name)
-
-        # make model directory
-        map_name = env_options['map_path'].split('/')[-1].split('.')[0]
-        if env_options['map_path'] == "":
-            map_name = f"_{env_options['map_size']}X{env_options['map_size']}_random"
-        else:
-            map_name = map_name.split('/')[-1].split('.')[0]
-
-        dir_to_save = f"models/{env_options['algorithm']['name']}/{map_name}"
-        print("directory to save model : ", dir_to_save)
-
-        # make log directory
-        dir_to_log = f"logs/{env_options['algorithm']['name']}/{map_name}/{model_name}"
-        print("directory to save logs : ", dir_to_log)
-
-        # if directory does not exist then create it
-        create_directory_if_not_exists(dir_to_save)
-        create_directory_if_not_exists(dir_to_log)
-
-        model_name = model_name + ".zip"
-        # train model
-        train_model(env=env,
-                    algorithm=env_options['algorithm']['name'],
-                    dir_path=dir_to_save,
-                    model_name=model_name,
-                    tensorboard_log=dir_to_log,
-                    hyperparameters=env_options['algorithm']['hyperparameters']
-                    )
-
-
-    elif command == "evaluate":
-        env_options = evaluate_input()
-        print("detected env options", env_options)
-
-        env = make_env(map_path=env_options['map_path'], PPO=env_options['algorithm'] == 'PPO')
-
-        model_path = env_options['model_path']
-
-        print("model path : ", model_path)
-        loaded_model = None
-
-        if env_options['algorithm'] == 'PPO':
-            from stable_baselines3 import PPO
-
-            loaded_model = PPO.load(model_path)
-        # evaluate model
-
-        print_evaluate(env=env, model=loaded_model)
-
+        train_in_maps(map_dir_path=env_options['map_path'], algorithm=env_options['algorithm'],
+                      target_dir=env_options['target_dir'], model_name=env_options['model_name'])
 
     elif command == "simulate":
-        env_options = simulate_input()
-        print("detected env options", env_options)
-
-        env = make_env(map_path=env_options['map_path'], PPO=env_options['algorithm'] == 'PPO', render_mode='human')
-
-        model_path = env_options['model_path']
-
-        print("model path : ", model_path)
-        loaded_model = None
-
-        if env_options['algorithm'] == 'PPO':
-            from stable_baselines3 import PPO
-
-            loaded_model = PPO.load(model_path)
-        # simulate model
-        evaluate_model(env=env, model=loaded_model)
+        evaluate_command(gui_render=True, option=simulate_input())
 
     else:
         print("Invalid command | Please use 'train', 'evaluate' or 'simulate' as command")
