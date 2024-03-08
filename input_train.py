@@ -16,6 +16,9 @@ User_Train_Input = {
         }
     },
     'map_path': 'maps/_5x5_empty',
+    'map_dir_path': 'maps/train', # for iterate.py
+    'target_dir': '', # for iterate.py
+    'tensorboard_log': '',
     'map_size': '5',
 }
 

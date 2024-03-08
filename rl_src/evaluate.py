@@ -1,6 +1,4 @@
 from stable_baselines3.common.evaluation import evaluate_policy
-
-from input_evaluate import evaluate_input
 from rl_src.make_env import make_env
 
 

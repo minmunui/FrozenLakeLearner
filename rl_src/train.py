@@ -6,7 +6,8 @@ from rl_src.make_env import make_env
 from utils.process_IO import make_model_name, create_directory_if_not_exists
 
 
-def train_model(env=None, algorithm="PPO", dir_path: str = "", model_name: str = "new_model", hyperparameters: dict = None, tensorboard_log: str = ""):
+def train_model(env=None, algorithm="PPO", dir_path: str = "", model_name: str = "new_model",
+                hyperparameters: dict = None, tensorboard_log: str = ""):
     """
     train the model using the given algorithm and env
     then save the model with the given name
@@ -15,7 +16,7 @@ def train_model(env=None, algorithm="PPO", dir_path: str = "", model_name: str =
     :param env: gym environment
     :param algorithm: algorithm to use for training
     :param model_name: name of the model to save
-    :return: None
+    :return: trained model
     """
 
     timesteps = hyperparameters['total_timesteps']
@@ -31,10 +32,11 @@ def train_model(env=None, algorithm="PPO", dir_path: str = "", model_name: str =
         mean_reward, std_reward = evaluate_policy(model, env, n_eval_episodes=10)
 
         print(f"Mean reward: {mean_reward} +/- {std_reward}")
-        return None
+        return model
     else:
         print("Invalid algorithm")
         return None
+
 
 def train_command():
     env_options = train_input()
@@ -51,15 +53,17 @@ def train_command():
     print("model name : ", model_name)
 
     # make model directory
-
     if env_options['map_path'] == "":
         map_name = f"_{env_options['map_size']}X{env_options['map_size']}_random"
     else:
         map_name = env_options['map_path'].split('/')[-1].split('.')[0]
 
     dir_to_save = f"models/{env_options['algorithm']['name']}/{map_name}"
+
     # make log directory
-    dir_to_log = f"logs/{env_options['algorithm']['name']}/{map_name}/{model_name}"
+    dir_to_log = env_options['tensorboard_log_dir']
+    if env_options['tensorboard_log_dir'] == "":
+        dir_to_log = f"logs/{env_options['algorithm']['name']}/{map_name}/{model_name}"
 
     # if directory does not exist then create it
     create_directory_if_not_exists(dir_to_save)

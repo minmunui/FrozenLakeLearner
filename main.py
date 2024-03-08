@@ -15,6 +15,7 @@ from input_simulate import simulate_input
 from input_train import train_input
 
 from rl_src.evaluate import evaluate_command
+from rl_src.iterate import train_in_maps_command
 from rl_src.train import train_command
 
 
@@ -27,6 +28,7 @@ def main():
         evaluate_command(gui_render=False, option=evaluate_input())
 
     elif command == "train_in_maps":
+        train_in_maps_command()
         from rl_src.iterate import train_in_maps
         env_options = train_input()
         print("detected env options", env_options)
