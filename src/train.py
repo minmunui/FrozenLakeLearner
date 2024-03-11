@@ -1,11 +1,8 @@
 from stable_baselines3 import PPO
-from stable_baselines3.common.evaluation import evaluate_policy
-
 from input_train import train_input
 from src.env import make_env
-from src.model import get_map_name
-from utils.process_IO import make_model_name, create_directory_if_not_exists
-from utils.utils import current_time_for_file
+from utils.process_IO import create_directory_if_not_exists, get_model_name, get_model_path, \
+    get_log_path, get_map_name
 
 
 def train_model(
@@ -14,7 +11,8 @@ def train_model(
         model_target: str = "",
         model_name: str = "new_model",
         hyperparameters: dict = None,
-        log_target: str = ""
+        log_target: str = "",
+        save: bool = True
 ):
     """
     train the model using the given algorithm and env
@@ -25,6 +23,7 @@ def train_model(
     :param model_name: name of the model to save
     :param hyperparameters:
     :param log_target:
+    :param save: save the model or not
     :return: trained model
     """
 
@@ -35,18 +34,15 @@ def train_model(
 
     if algorithm == "PPO":
         model = PPO("MlpPolicy", env, verbose=1, tensorboard_log=log_target, **agent_hyperparameters)
-        model.learn(total_timesteps=timesteps)
-        model.save(f"{model_target}/{model_name}")
 
-        mean_reward, std_reward = evaluate_policy(model, env, n_eval_episodes=10)
-        print("==========Train completed==========")
-        print(f"model_path : {model_target}/{model_name}")
-        print(f"log_path : {log_target}")
-        print(f"Mean reward: {mean_reward} +/- {std_reward}")
-        return model
     else:
         print("Invalid algorithm")
         return None
+
+    model.learn(total_timesteps=timesteps)
+    if save:
+        model.save(f"{model_target}/{model_name}")
+    return model
 
 
 def train_command():
@@ -58,40 +54,15 @@ def train_command():
     # make environment
     env = make_env(map_path=env_options['map_path'], PPO=algorithm == 'PPO', gui=False)
 
-    # get map name
-    if env_options['map_path'] == '':
-        map_name = f"_{env_options['map_size']}_{current_time_for_file()}"
-    else:
-        map_name = get_map_name(env_options['map_path'])
-
-    # make model name
-    if env_options['model_name'] == '':
-        model_name = make_model_name(hyperparameters)
-    else:
-        model_name = env_options['model_name']
-        print(f"detected : {model_name}")
-        extension = model_name.split('.')[-1]
-        print(f"extension")
-        if extension != 'zip':
-            model_name = model_name + ".zip"
-            print(f"model_name : {model_name}")
-
-    # make model directory
-    if env_options['model_target'] == '':
-        dir_to_model = f"models/{algorithm}/{map_name}/"
-    else:
-        dir_to_model = env_options['model_target']
-
-    # make log directory
-    if env_options['log_target'] == '':
-        dir_to_log = f"logs/{algorithm}/{map_name}/"
-    else:
-        dir_to_log = env_options['log_target']
+    # process model name and log name
+    map_name = get_map_name(env_options['map_path'], env_options['map_size'])
+    model_name = get_model_name(env_options['model_name'], hyperparameters)
+    model_dir = get_model_path(algorithm, env_options['model_target'], map_name)
+    log_dir = get_log_path(algorithm, env_options['log_target'], map_name)
 
     # if directory does not exist then create it
-    create_directory_if_not_exists(dir_to_model)
-    create_directory_if_not_exists(dir_to_log)
+    create_directory_if_not_exists(model_dir)
+    create_directory_if_not_exists(log_dir)
 
-    train_model(env=env, algorithm=algorithm, model_target=dir_to_model, model_name=model_name,
-                hyperparameters=hyperparameters, log_target=dir_to_log)
-
+    train_model(env=env, algorithm=algorithm, model_target=model_dir, model_name=model_name,
+                hyperparameters=hyperparameters, log_target=log_dir)

@@ -6,6 +6,7 @@ def current_time_for_file():
     import datetime
     return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S").replace(" ", "_").replace(":", "_")
 
+
 def print_map(map_array):
     for row in map_array:
         print(row)

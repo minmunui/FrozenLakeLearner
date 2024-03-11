@@ -9,14 +9,7 @@ def make_model(algorithm: str, agent_hyperparameters: dict, env, tensorboard_log
         return model
 
 
-def make_model_name(hyperparameters: dict):
-    name = ""
-    for key in hyperparameters:
-        name += f"{simplify_key(key)}_{hyperparameters[key]}_"
-    return name
-
-
-def get_map_name(map_path: str):
+def trim_extension(map_path: str):
     return map_path.split('/')[-1].split('.')[0]
 
 
