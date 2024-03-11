@@ -1,11 +1,13 @@
 import os
 from typing import List
 
-# from utils.process_IO import create_directory_if_not_exists
+from utils.process_IO import create_directory_if_not_exists
 
-def create_directory_if_not_exists(path):
-    if not os.path.exists(path):
-        os.makedirs(path)
+
+# def create_directory_if_not_exists(path):
+#     if not os.path.exists(path):
+#         os.makedirs(path)
+
 
 def is_valid(board: List[str]) -> bool:
     max_row_size = len(board)
@@ -46,8 +48,6 @@ def make_empty_map(n_col, n_row, start: (int, int), goal: (int, int)):
     board = []
     for i in range(n_row):
         board.append("E" * n_col)
-    for row in board:
-        print(row)
 
     # 시작점과 도착점 설정
     board[start[1]] = replace_index_with_char(board[start[1]], start[0], "S")
@@ -78,7 +78,7 @@ def hole(board: List[str]) -> List[str]:
     return board
 
 
-def generate_all_map(n_col: int, n_row: int, start: (int, int), goal: (int, int), dir_path: str = ""):
+def generate_all_map(n_col: int, n_row: int, start: (int, int) = None, goal: (int, int) = None, dir_path: str = ""):
     """
     This function is used to generate all possible maps of size n_col x n_row
     :param n_col: number of columns
@@ -88,6 +88,11 @@ def generate_all_map(n_col: int, n_row: int, start: (int, int), goal: (int, int)
     :param dir_path: path to the directory to save the maps
     :return: list of all possible maps
     """
+    if start is None:
+        start = (0, 0)
+    if goal is None:
+        goal = (n_row - 1, n_col - 1)
+
     if dir_path == "":
         dir_path = f"maps/generated/all_{n_col}X{n_row}"
 
@@ -111,6 +116,3 @@ def generate_all_map(n_col: int, n_row: int, start: (int, int), goal: (int, int)
         frontier.append(occupied_map)
         if is_valid(hole_map):
             frontier.append(hole_map)
-
-
-generate_all_map(4, 3, (1, 0), (3, 2))

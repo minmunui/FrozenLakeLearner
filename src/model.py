@@ -1,6 +1,6 @@
 from stable_baselines3 import PPO
 
-from utils.process_IO import make_model_name
+
 
 
 def make_model(algorithm: str, agent_hyperparameters: dict, env, tensorboard_log: str):
@@ -22,6 +22,7 @@ def dir_to_save(algorithm: str, map_name: str):
 
 
 def dir_to_log(algorithm: str, hyperparameters: dict, map_name: str, model_name: str):
+    from utils.process_IO import make_model_name
     if not model_name:
         model_name = make_model_name(hyperparameters)
     return f"logs/{algorithm}/{map_name}/{model_name}"
