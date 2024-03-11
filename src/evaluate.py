@@ -17,9 +17,7 @@ def evaluate_command(gui_render: bool = False, option: dict = None):
     env_options = option
     print("detected env options", env_options)
 
-    render_mode = 'human' if gui_render else None
-
-    env = make_env(map_path=env_options['map_path'], PPO=env_options['algorithm'] == 'PPO', render_mode=render_mode)
+    env = make_env(map_path=env_options['map_path'], PPO=env_options['algorithm'] == 'PPO', gui=gui_render)
 
     model_path = env_options['model_path']
 
@@ -28,7 +26,6 @@ def evaluate_command(gui_render: bool = False, option: dict = None):
 
     if env_options['algorithm'] == 'PPO':
         from stable_baselines3 import PPO
-
         loaded_model = PPO.load(model_path)
     # evaluate model
 
