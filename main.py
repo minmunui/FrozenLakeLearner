@@ -16,6 +16,7 @@ from input_simulate import simulate_input
 from src.evaluate import evaluate_command
 from src.iterate import iterate_command
 from src.train import train_command
+from utils.generate_maps import generate_all_map
 
 
 def main():
@@ -31,6 +32,11 @@ def main():
 
     elif command == "iterate":
         iterate_command()
+
+    elif command == "generate":
+        [n_row, n_col] = sys.argv[2].split('X')
+        print(f"Generating all possible maps of size {n_row}x{n_col}")
+        generate_all_map(int(n_col), int(n_row))
 
     else:
         print("Invalid command | Please use 'train', 'evaluate' or 'simulate' as command")

@@ -11,7 +11,7 @@ User_Iterate_Input = {
     'algorithm': {  # algorithm to use for training
         'name': 'PPO',
         'hyperparameters': {
-            'total_timesteps': 50000,
+            'total_timesteps': 500000,
             'learning_rate': 0.0001,
             'batch_size': 64,
             'gamma': 0.99,
@@ -28,7 +28,7 @@ Default_Iterate_Input = {
     'algorithm': {
         'name': 'PPO',
         'hyperparameters': {
-            'total_timesteps': 5000,
+            'total_timesteps': 50000,
             'learning_rate': 0.0001,
             'batch_size': 64,
             'gamma': 0.99,

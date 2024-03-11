@@ -1,6 +1,6 @@
 from stable_baselines3 import PPO
 
-from utils.utils import simplify_key
+from utils.process_IO import make_model_name
 
 
 def make_model(algorithm: str, agent_hyperparameters: dict, env, tensorboard_log: str):
