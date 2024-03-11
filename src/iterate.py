@@ -1,19 +1,11 @@
+import gymnasium as gym
 from stable_baselines3 import PPO
+from stable_baselines3.common.vec_env import DummyVecEnv
 
 from input_iterate import iterate_input
-from src.env import make_env
-from src.model import make_model_name
-from src.train import train_model
+from src.env import make_env, load_map
+from utils.process_IO import get_model_name, get_log_path, load_map_name, get_model_path
 
-
-def load_map_name(map_dir: str):
-    """
-    This function is used to load the maps from the given directory
-    :param map_dir: path
-    :return: list of maps
-    """
-    import os
-    return os.listdir(map_dir)
 
 def iterate(
         map_dir: str,
@@ -34,21 +26,55 @@ def iterate(
     :return: None
     """
     map_names = load_map_name(map_dir)
-    each_timesteps = hyperparameters.pop('total_timesteps')/len(map_names)
+    each_timesteps = hyperparameters.pop('total_timesteps') / len(map_names)
 
+    log_target = get_log_path(algorithm, log_target, 'None', iter_model_name=model_name)
     # TODO : Iterate over the maps
+
+    init_map_path = f"{map_dir}/{map_names[0]}"
+    init_map = load_map(init_map_path)
+
     if algorithm == 'PPO':
-        env = make_env(map_path=f"{map_dir}/{map_name}", PPO=algorithm == 'PPO', gui=False)
-        model = PPO("MlpPolicy", env, verbose=1, tensorboard_log=log_target, **hyperparameters)
+        init_env = DummyVecEnv(
+            [lambda: gym.make('FrozenLake-v1', desc=init_map, map_name=None, is_slippery=False, render_mode=None)])
+        model = PPO("MlpPolicy", init_env, verbose=1, tensorboard_log=log_target, **hyperparameters)
+    else:
+        init_env = gym.make('FrozenLake-v1', desc=init_map, map_name=None, is_slippery=False, render_mode=None)
+        model = None  # TODO : Add other algorithms
 
     for map_name in map_names:
-        # make environment
-        # make model name
-        model_name = make_model_name(hyperparameters)
-        # train model
-        train_model(
-            env=env,
-            algorithm=algorithm,
-            model_name=model_name,
-            hyperparameters=hyperparameters
-        )
+        env = make_env(map_path=f"{map_dir}/{map_name}", PPO=algorithm == 'PPO', gui=False)
+        print(f"Training on map {map_name}")
+        model.set_env(env=env)
+        model.learn(total_timesteps=each_timesteps)
+
+    model_name = get_model_name(model_name, hyperparameters)
+    model_target = get_model_path(algorithm, model_target, 'None', iter_model_name=model_target)
+    model.save(f"{model_target}/{model_name}")
+
+    return model
+
+
+def iterate_command():
+    iterate_option = iterate_input()
+    print("detected iterate options", iterate_option)
+    algorithm = iterate_option['algorithm']['name']
+    hyperparameters = iterate_option['algorithm']['hyperparameters']
+
+    if iterate_option['map_dir'] == '':
+        map_dir = 'maps/train'
+    else:
+        map_dir = iterate_option['map_dir']
+
+    model_name = iterate_option['model_name']
+    model_target = iterate_option['model_target']
+    log_target = iterate_option['log_target']
+
+    iterate(
+        map_dir=map_dir,
+        algorithm=algorithm,
+        model_target=model_target,
+        model_name=model_name,
+        hyperparameters=hyperparameters,
+        log_target=log_target
+    )

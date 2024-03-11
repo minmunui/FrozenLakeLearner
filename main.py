@@ -14,6 +14,7 @@ from input_evaluate import evaluate_input
 from input_simulate import simulate_input
 
 from src.evaluate import evaluate_command
+from src.iterate import iterate_command
 from src.train import train_command
 
 
@@ -27,6 +28,9 @@ def main():
 
     elif command == "simulate":
         evaluate_command(gui_render=True, option=simulate_input())
+
+    elif command == "iterate":
+        iterate_command()
 
     else:
         print("Invalid command | Please use 'train', 'evaluate' or 'simulate' as command")

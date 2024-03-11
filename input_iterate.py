@@ -4,14 +4,14 @@ Description : This file contains the default input for the model, you can edit t
 from utils.utils import get_merge_dictionary
 
 User_Iterate_Input = {
-    'model_name': '',
-    'model_target': '',
-    'map_dir': '',
-    'log_target': '',
-    'algorithm': {
+    'model_name': '',  # name of the model to save
+    'model_target': '',  # directory to save the model
+    'map_dir': '',  # path to the directory containing the maps
+    'log_target': '',  # path to the directory to save the logs
+    'algorithm': {  # algorithm to use for training
         'name': 'PPO',
         'hyperparameters': {
-            'total_timesteps': 5000,
+            'total_timesteps': 50000,
             'learning_rate': 0.0001,
             'batch_size': 64,
             'gamma': 0.99,

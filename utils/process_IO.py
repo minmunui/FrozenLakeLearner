@@ -75,6 +75,16 @@ def get_log_path(algorithm: str, log_target: str, map_name: str, iter_model_name
     return dir_to_log
 
 
+def load_map_name(map_dir: str):
+    """
+    This function is used to load the maps from the given directory
+    :param map_dir: path
+    :return: list of maps
+    """
+    import os
+    return os.listdir(map_dir)
+
+
 def make_model_directory(input_object: dict):
     dir_path = f"models/${input_object['map_name']}/${input_object['algorithm']}"
     if not os.path.join(dir_path):

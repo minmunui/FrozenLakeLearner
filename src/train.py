@@ -7,7 +7,7 @@ from utils.process_IO import create_directory_if_not_exists, get_model_name, get
 
 def train_model(
         env=None,
-        algorithm="PPO",
+        algorithm: str = "PPO",
         model_target: str = "",
         model_name: str = "new_model",
         hyperparameters: dict = None,
