@@ -12,11 +12,9 @@ import sys
 
 from input_evaluate import evaluate_input
 from input_simulate import simulate_input
-from input_train import train_input
 
-from rl_src.evaluate import evaluate_command
-from rl_src.iterate import train_in_maps_command
-from rl_src.train import train_command
+from src.evaluate import evaluate_command
+from src.train import train_command
 
 
 def main():
@@ -26,15 +24,6 @@ def main():
 
     elif command == "evaluate":
         evaluate_command(gui_render=False, option=evaluate_input())
-
-    elif command == "train_in_maps":
-        train_in_maps_command()
-        from rl_src.iterate import train_in_maps
-        env_options = train_input()
-        print("detected env options", env_options)
-
-        train_in_maps(map_dir_path=env_options['map_path'], algorithm=env_options['algorithm'],
-                      target_dir=env_options['target_dir'], model_name=env_options['model_name'])
 
     elif command == "simulate":
         evaluate_command(gui_render=True, option=simulate_input())
