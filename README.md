@@ -1,4 +1,4 @@
-# StorageYardProblem
+# FrozenLakeLearner
 
 ## Tensorboard
 ```bash
