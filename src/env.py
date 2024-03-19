@@ -2,13 +2,16 @@ import gymnasium as gym
 from stable_baselines3.common.vec_env import DummyVecEnv
 from gymnasium.envs.toy_text.frozen_lake import generate_random_map
 
+from envs.Fixed1DFrozenLake import Fixed1DFrozenLake
+from envs.FixedGridFrozenLake import FixedGridFrozenLake
 from utils.process_IO import create_directory_if_not_exists
 from utils.utils import current_time_for_file
 
 
 def single_agent_env(map_for_env: list, gui=False):
     render_mode = 'human' if gui else None
-    env = gym.make('FrozenLake-v1', desc=map_for_env, map_name=None, is_slippery=False, render_mode=render_mode)
+    # env = gym.make('FrozenLake-v1', desc=map_for_env, map_name=None, is_slippery=False, render_mode=render_mode)
+    env = Fixed1DFrozenLake(desc=map_for_env, map_name=None, is_slippery=False, render_mode=render_mode)
     return env
 
 
@@ -47,7 +50,8 @@ def load_map(map_path: str):
         string_map = f.read()
     map_result = []
     for line in string_map.split('\n'):
-        map_result.append(line)
+        if line != '':
+            map_result.append(line)
     return map_result
 
 

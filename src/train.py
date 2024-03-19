@@ -33,7 +33,7 @@ def train_model(
     agent_hyperparameters.pop('total_timesteps')
 
     if algorithm == "PPO":
-        model = PPO("MlpPolicy", env, verbose=1, tensorboard_log=log_target, **agent_hyperparameters)
+        model = PPO("MultiInputPolicy", env, verbose=1, tensorboard_log=log_target, **agent_hyperparameters)
 
     else:
         print("Invalid algorithm")

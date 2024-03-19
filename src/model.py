@@ -1,11 +1,9 @@
 from stable_baselines3 import PPO
 
 
-
-
 def make_model(algorithm: str, agent_hyperparameters: dict, env, tensorboard_log: str):
     if algorithm == 'PPO':
-        model = PPO("MlpPolicy", env, verbose=1, tensorboard_log=tensorboard_log, **agent_hyperparameters)
+        model = PPO("MultiInputPolicy", env, verbose=1, tensorboard_log=tensorboard_log, **agent_hyperparameters)
         return model
 
 

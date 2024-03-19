@@ -2,6 +2,7 @@ import gymnasium as gym
 from stable_baselines3 import PPO
 from stable_baselines3.common.vec_env import DummyVecEnv
 
+from envs.Fixed1DFrozenLake import Fixed1DFrozenLake
 from input_iterate import iterate_input
 from src.env import make_env, load_map
 from utils.process_IO import get_model_name, get_log_path, load_map_name, get_model_path
@@ -33,11 +34,12 @@ def iterate(
 
     init_map_path = f"{map_dir}/{map_names[0]}"
     init_map = load_map(init_map_path)
+    print("Initial map", init_map)
 
     if algorithm == 'PPO':
         init_env = DummyVecEnv(
-            [lambda: gym.make('FrozenLake-v1', desc=init_map, map_name=None, is_slippery=False, render_mode=None)])
-        model = PPO("MlpPolicy", init_env, verbose=1, tensorboard_log=log_target, **hyperparameters)
+            [lambda: Fixed1DFrozenLake(desc=init_map, map_name=None, is_slippery=False, render_mode='None')])
+        model = PPO("MultiInputPolicy", init_env, verbose=1, tensorboard_log=log_target, **hyperparameters)
     else:
         init_env = gym.make('FrozenLake-v1', desc=init_map, map_name=None, is_slippery=False, render_mode=None)
         model = None  # TODO : Add other algorithms
