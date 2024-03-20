@@ -1,10 +1,11 @@
 import random
+from datetime import datetime
 
 import gymnasium as gym
 
 from input_iterate import iterate_input
 from src.env import make_env, load_map
-from src.model import get_algorithm
+from src.model import get_algorithm, prune_hyperparameters
 from src.setup import env_class
 from utils.process_IO import get_model_name, get_log_path, load_map_name, get_model_path
 
@@ -40,27 +41,30 @@ def iterate(
 
     init_map_path = f"{map_dir}/{maps_to_iterate[0]}"
     init_map = load_map(init_map_path)
-    model = None
 
     init_env = env(desc=init_map, map_name=None, is_slippery=False, render_mode='None')
     alg_object = get_algorithm(algorithm)
 
-    if algorithm == 'DQN':
-        hyperparameters.pop('n_steps')
-    elif algorithm == 'A2C':
-        hyperparameters.pop('batch_size')
+    hyperparameters = prune_hyperparameters(hyperparameters, algorithm)
 
     model = alg_object("MultiInputPolicy", init_env, verbose=1, tensorboard_log=log_target, **hyperparameters)
 
+    count = 0
     for map_name in maps_to_iterate:
-        env = make_env(map_path=f"{map_dir}/{map_name}", PPO=algorithm == 'PPO', gui=False, env_class=env_class)
-        print(f"Training on map {map_name}")
+        env = make_env(map_path=f"{map_dir}/{map_name}", gui=False, env_class=env_class,
+                       truncate=False)
+        print(f"Training on map {map_name} | {count + 1}/{len(maps_to_iterate)}")
         model.set_env(env=env)
         model.learn(total_timesteps=each_timesteps)
+        count += 1
 
     model_name = get_model_name(model_name, hyperparameters)
     model_target = get_model_path(algorithm, model_target, 'None', iter_model_name=model_target)
     model.save(f"{model_target}/{model_name}")
+    print(f"Training completed on {len(maps_to_iterate)} maps")
+    print(f"Model saved at {model_target}/{model_name}")
+    print(f"log saved at {log_target}")
+    print(f"current time : {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
     return model
 

@@ -5,14 +5,19 @@ from utils.utils import get_merge_dictionary
 
 User_Evaluate_Input = {
     'algorithm': 'PPO',
-    'model_path': 'models/PPO/_5X5_2024-03-11_15_07_50/tt_5000_lr_0.0001_bs_64_g_0.99_ns_2048_.zip',
-    'map_path': 'maps/_5X5_normal.txt',
+    'model_path': 'models/PPO/_4X4_custom/tt_79000_lr_0.0001_bs_64_g_0.99_ns_2048_.zip',
+    'n_eval_episodes': 1,
+    'map_dir': 'maps/generated/all_4X4',
+    'success_map_target': 'test_result/PPO/success'
 }
 
 Default_Evaluate_Input = {
     'algorithm': 'PPO',
-    'model_path': 'models/PPO/_5X5_empty/tt_50000_lr_0.0001_bs_64_g_0.99_ns_2048_.zip',
+    'model_path': 'models/PPO/_5X5_2024-03-11_15_07_50/tt_5000_lr_0.0001_bs_64_g_0.99_ns_2048_.zip',
     'map_path': 'maps/_5X5_normal.txt',
+    'n_eval_episodes': 1,
+    'map_dir': 'maps/generated/all_4X4',
+    'success_map_target': 'maps/success'
 }
 
 
