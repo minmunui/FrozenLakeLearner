@@ -21,6 +21,34 @@ def get_algorithm(algorithm: str):
         raise ValueError("Invalid algorithm")
 
 
+def prune_hyperparameters(hyperparameters: dict, algorithm: str):
+    """
+    This function is used to remove the hyperparameters that are not required for the given algorithm
+    :param hyperparameters:
+    :param algorithm:
+    :return: pruned hyperparameters
+    """
+    if algorithm == 'DQN':
+        hyperparameters.pop('n_steps')
+        print("n_steps removed from hyperparameters for DQN")
+    elif algorithm == 'A2C':
+        hyperparameters.pop('batch_size')
+        print("batch_size removed from hyperparameters for A2C")
+    elif algorithm == 'SAC':
+        hyperparameters.pop('n_steps')
+        hyperparameters.pop('batch_size')
+        print("n_steps and batch_size removed from hyperparameters for SAC")
+    elif algorithm == 'TD3':
+        hyperparameters.pop('n_steps')
+        hyperparameters.pop('batch_size')
+        print("n_steps and batch_size removed from hyperparameters for TD3")
+    elif algorithm == 'DDPG':
+        hyperparameters.pop('n_steps')
+        hyperparameters.pop('batch_size')
+        print("n_steps and batch_size removed from hyperparameters for DDPG")
+    return hyperparameters
+
+
 def trim_extension(map_path: str):
     return map_path.split('/')[-1].split('.')[0]
 

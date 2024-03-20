@@ -6,21 +6,19 @@ from utils.utils import get_merge_dictionary
 User_Train_Input = {
     'model_name': '',
     'model_target': '',
-    'map_path': '',
-    'map_size': '5X5',
+    'map_path': 'maps/_4X4_custom.txt',
+    'map_size': '',
     'log_target': '',
     'algorithm': {
-        'name': 'PPO',
+        'name': 'A2C',
         'hyperparameters': {
-            'total_timesteps': 5000,
+            'total_timesteps': 300,
             'learning_rate': 0.0001,
             'batch_size': 64,
             'gamma': 0.99,
             'n_steps': 2048,
         }
     },
-
-    'map_dir_path': 'maps/train',  # for iterate.py
 }
 
 Default_Train_Input = {
@@ -39,8 +37,6 @@ Default_Train_Input = {
     },
     'log_target': '',
     'model_target': '',
-
-    'map_dir_path': 'maps/train',  # for iterate.py
 }
 
 

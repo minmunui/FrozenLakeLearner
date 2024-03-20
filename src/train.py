@@ -1,6 +1,6 @@
 from input_train import train_input
 from src.env import make_env
-from src.model import get_algorithm
+from src.model import get_algorithm, prune_hyperparameters
 from src.setup import env_class
 from utils.process_IO import create_directory_if_not_exists, get_model_name, get_model_path, \
     get_log_path, get_map_name
@@ -35,11 +35,15 @@ def train_model(
 
     make_model = get_algorithm(algorithm)
 
-    model = make_model("MultiInputPolicy", env, verbose=1, tensorboard_log=log_target, **agent_hyperparameters)
+    agent_hyperparameters = prune_hyperparameters(hyperparameters, algorithm)
+
+    model = make_model("MultiInputPolicy", env, verbose=1, tensorboard_log=log_target, **agent_hyperparameters, truncated=False)
 
     model.learn(total_timesteps=timesteps)
     if save:
         model.save(f"{model_target}/{model_name}")
+        print(f"Model saved at {model_target}/{model_name}")
+    print(f"log saved at {log_target}")
     return model
 
 
@@ -50,7 +54,7 @@ def train_command():
     hyperparameters = env_options['algorithm']['hyperparameters']
 
     # make environment
-    env = make_env(map_path=env_options['map_path'], PPO=algorithm == 'PPO', gui=False, env_class=env_class)
+    env = make_env(map_path=env_options['map_path'], gui=False, env_class=env_class)
 
     # process model name and log name
     map_name = get_map_name(env_options['map_path'], env_options['map_size'])

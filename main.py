@@ -13,7 +13,7 @@ import sys
 from input_evaluate import evaluate_input
 from input_simulate import simulate_input
 
-from src.evaluate import evaluate_command
+from src.evaluate import evaluate_command, simulate_command
 from src.iterate import iterate_command
 from src.train import train_command
 from utils.generate_maps import generate_all_map
@@ -25,10 +25,10 @@ def main():
         train_command()
 
     elif command == "evaluate":
-        evaluate_command(gui_render=False, option=evaluate_input())
+        evaluate_command(option=evaluate_input())
 
     elif command == "simulate":
-        evaluate_command(gui_render=True, option=simulate_input())
+        simulate_command(option=simulate_input())
 
     elif command == "iterate":
         iterate_command()

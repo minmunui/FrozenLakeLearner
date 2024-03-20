@@ -17,3 +17,4 @@ class Fixed1DFrozenLake(FixedGridFrozenLake):
             for j in range(self.ncol):
                 if self.desc[i][j] == b'H':
                     self.map[i * self.ncol + j] = False
+

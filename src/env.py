@@ -5,28 +5,13 @@ from utils.process_IO import create_directory_if_not_exists
 from utils.utils import current_time_for_file
 
 
-def single_agent_env(map_for_env: list, gui=False, env_class=None):
-    if env_class is None:
-        raise ValueError("env_class is None")
-    render_mode = 'human' if gui else None
-    env = env_class(desc=map_for_env, map_name=None, is_slippery=False, render_mode=render_mode)
-    return env
-
-
-def multi_agent_env(map_for_env: list, gui=False, env_class=None):
-    if env_class is None:
-        raise ValueError("env_class is None")
-    env = DummyVecEnv([lambda: single_agent_env(map_for_env, gui, env_class)])
-    return env
-
-
-def make_env(map_path, PPO: bool = True, gui: bool = False, env_class=None):
+def make_env(map_path, gui: bool = False, env_class=None, truncate=False):
     """
     This function is used to make the environment
-    :param env_class:  class of the environment
     :param map_path: map to be used for the environment
-    :param PPO: if True then use PPO algorithm
     :param gui: if True then render the environment
+    :param env_class:  class of the environment
+    :param truncate: if True then use the truncated environment
     :return: environment
     """
     if map_path == "":
@@ -34,10 +19,10 @@ def make_env(map_path, PPO: bool = True, gui: bool = False, env_class=None):
     else:
         map_for_env = load_map(map_path)
 
-    if PPO:
-        env = multi_agent_env(map_for_env, gui=gui, env_class=env_class)
-    else:
-        env = single_agent_env(map_for_env, gui=gui, env_class=env_class)
+    if env_class is None:
+        raise ValueError("env_class is None")
+    render_mode = 'human' if gui else None
+    env = env_class(desc=map_for_env, map_name=None, is_slippery=False, render_mode=render_mode, truncate=truncate)
     return env
 
 

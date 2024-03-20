@@ -7,12 +7,12 @@ User_Iterate_Input = {
     'model_name': '',  # name of the model to save
     'model_target': '',  # directory to save the model
     'map_dir': 'maps/generated/all_4X4',  # path to the directory containing the maps
-    'log_target': 'logs/mixed_44_DQN_ts75000_sampled50',  # path to the directory to save the logs\
+    'log_target': 'logs/test',  # path to the directory to save the logs\
     'sample_map': 100,  # number of maps to sample from the map_dir if 0 then all maps will be used
     'algorithm': {  # algorithm to use for training
-        'name': 'PPO',
+        'name': 'DQN',
         'hyperparameters': {
-            'total_timesteps': 50*75000,
+            'total_timesteps': 10000,
             'learning_rate': 0.0001,
             'batch_size': 64,
             'gamma': 0.99,
