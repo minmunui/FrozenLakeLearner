@@ -15,14 +15,11 @@ class FixedGridFrozenLake(FrozenLakeEnv):
         self.goal = self._find_goal()
 
         self.map = [[True] * self.ncol for _ in range(self.nrow)]
-        print("init map:", self.map)
         print(self.desc)
         for i in range(self.nrow):
             for j in range(self.ncol):
                 if self.desc[i][j] == b'H':
-                    print('i:', i, 'j:', j)
                     self.map[i][j] = False
-        print(self.map)
 
     def _find_goal(self):
         for i in range(self.nrow):
@@ -32,8 +29,6 @@ class FixedGridFrozenLake(FrozenLakeEnv):
 
     def step(self, a):
         obs, reward, done, truncated, info = super().step(a)
-        # print('obs:', obs)
-        # print('self.s', self.s)
         current = (self.s // self.ncol, self.s % self.ncol)
         return {'current': current, 'goal': self.goal, 'map': self.map}, reward, done, truncated, info
 

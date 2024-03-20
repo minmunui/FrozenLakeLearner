@@ -1,6 +1,7 @@
-from stable_baselines3 import PPO
 from input_train import train_input
 from src.env import make_env
+from src.model import get_algorithm
+from src.setup import env_class
 from utils.process_IO import create_directory_if_not_exists, get_model_name, get_model_path, \
     get_log_path, get_map_name
 
@@ -32,12 +33,9 @@ def train_model(
     agent_hyperparameters = hyperparameters
     agent_hyperparameters.pop('total_timesteps')
 
-    if algorithm == "PPO":
-        model = PPO("MultiInputPolicy", env, verbose=1, tensorboard_log=log_target, **agent_hyperparameters)
+    make_model = get_algorithm(algorithm)
 
-    else:
-        print("Invalid algorithm")
-        return None
+    model = make_model("MultiInputPolicy", env, verbose=1, tensorboard_log=log_target, **agent_hyperparameters)
 
     model.learn(total_timesteps=timesteps)
     if save:
@@ -52,7 +50,7 @@ def train_command():
     hyperparameters = env_options['algorithm']['hyperparameters']
 
     # make environment
-    env = make_env(map_path=env_options['map_path'], PPO=algorithm == 'PPO', gui=False)
+    env = make_env(map_path=env_options['map_path'], PPO=algorithm == 'PPO', gui=False, env_class=env_class)
 
     # process model name and log name
     map_name = get_map_name(env_options['map_path'], env_options['map_size'])

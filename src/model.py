@@ -1,10 +1,24 @@
-from stable_baselines3 import PPO
-
-
-def make_model(algorithm: str, agent_hyperparameters: dict, env, tensorboard_log: str):
+def get_algorithm(algorithm: str):
     if algorithm == 'PPO':
-        model = PPO("MultiInputPolicy", env, verbose=1, tensorboard_log=tensorboard_log, **agent_hyperparameters)
-        return model
+        from stable_baselines3 import PPO
+        return PPO
+    elif algorithm == 'DQN':
+        from stable_baselines3 import DQN
+        return DQN
+    elif algorithm == 'A2C':
+        from stable_baselines3 import A2C
+        return A2C
+    elif algorithm == 'SAC':
+        from stable_baselines3 import SAC
+        return SAC
+    elif algorithm == 'TD3':
+        from stable_baselines3 import TD3
+        return TD3
+    elif algorithm == 'DDPG':
+        from stable_baselines3 import DDPG
+        return DDPG
+    else:
+        raise ValueError("Invalid algorithm")
 
 
 def trim_extension(map_path: str):

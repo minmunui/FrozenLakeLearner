@@ -6,12 +6,13 @@ from utils.utils import get_merge_dictionary
 User_Iterate_Input = {
     'model_name': '',  # name of the model to save
     'model_target': '',  # directory to save the model
-    'map_dir': '',  # path to the directory containing the maps
-    'log_target': '',  # path to the directory to save the logs
+    'map_dir': 'maps/generated/all_4X4',  # path to the directory containing the maps
+    'log_target': 'logs/mixed_44_DQN_ts75000_sampled50',  # path to the directory to save the logs\
+    'sample_map': 100,  # number of maps to sample from the map_dir if 0 then all maps will be used
     'algorithm': {  # algorithm to use for training
         'name': 'PPO',
         'hyperparameters': {
-            'total_timesteps': 500000,
+            'total_timesteps': 50*75000,
             'learning_rate': 0.0001,
             'batch_size': 64,
             'gamma': 0.99,
@@ -25,6 +26,7 @@ Default_Iterate_Input = {
     'model_target': '',
     'map_dir': '',
     'log_target': '',
+    'sample_map': 0,  # number of maps to sample from the map_dir if 0 then all maps will be used
     'algorithm': {
         'name': 'PPO',
         'hyperparameters': {

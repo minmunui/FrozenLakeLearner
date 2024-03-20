@@ -1,12 +1,11 @@
 import random
 
 import gymnasium as gym
-from stable_baselines3 import PPO
-from stable_baselines3.common.vec_env import DummyVecEnv
 
-from envs.Fixed1DFrozenLake import Fixed1DFrozenLake
 from input_iterate import iterate_input
 from src.env import make_env, load_map
+from src.model import get_algorithm
+from src.setup import env_class
 from utils.process_IO import get_model_name, get_log_path, load_map_name, get_model_path
 
 
@@ -18,9 +17,11 @@ def iterate(
         model_name: str,
         hyperparameters: dict,
         log_target: str,
+        env: gym.Env
 ):
     """
     This function is used to iterate the training process over the given maps
+    :param env: class of the environment
     :param sample_num: number of maps to sample from the map_dir if 0 then all maps will be used
     :param map_dir: path to the directory containing the maps
     :param algorithm: algorithm to use for training
@@ -39,18 +40,20 @@ def iterate(
 
     init_map_path = f"{map_dir}/{maps_to_iterate[0]}"
     init_map = load_map(init_map_path)
-    print("Initial map", init_map)
+    model = None
 
-    if algorithm == 'PPO':
-        init_env = DummyVecEnv(
-            [lambda: Fixed1DFrozenLake(desc=init_map, map_name=None, is_slippery=False, render_mode='None')])
-        model = PPO("MultiInputPolicy", init_env, verbose=1, tensorboard_log=log_target, **hyperparameters)
-    else:
-        init_env = gym.make('FrozenLake-v1', desc=init_map, map_name=None, is_slippery=False, render_mode=None)
-        model = None  # TODO : Add other algorithms
+    init_env = env(desc=init_map, map_name=None, is_slippery=False, render_mode='None')
+    alg_object = get_algorithm(algorithm)
+
+    if algorithm == 'DQN':
+        hyperparameters.pop('n_steps')
+    elif algorithm == 'A2C':
+        hyperparameters.pop('batch_size')
+
+    model = alg_object("MultiInputPolicy", init_env, verbose=1, tensorboard_log=log_target, **hyperparameters)
 
     for map_name in maps_to_iterate:
-        env = make_env(map_path=f"{map_dir}/{map_name}", PPO=algorithm == 'PPO', gui=False)
+        env = make_env(map_path=f"{map_dir}/{map_name}", PPO=algorithm == 'PPO', gui=False, env_class=env_class)
         print(f"Training on map {map_name}")
         model.set_env(env=env)
         model.learn(total_timesteps=each_timesteps)
@@ -84,5 +87,6 @@ def iterate_command():
         model_target=model_target,
         model_name=model_name,
         hyperparameters=hyperparameters,
-        log_target=log_target
+        log_target=log_target,
+        env=env_class
     )
