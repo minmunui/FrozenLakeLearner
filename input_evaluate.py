@@ -4,11 +4,11 @@ Description : This file contains the default input for the model, you can edit t
 from utils.utils import get_merge_dictionary
 
 User_Evaluate_Input = {
-    'algorithm': 'PPO',
-    'model_path': 'models/PPO/_4X4_custom/tt_79000_lr_0.0001_bs_64_g_0.99_ns_2048_.zip',
-    'n_eval_episodes': 1,
+    'algorithm': 'A2C',
+    'model_path': 'models/A2C/iterate_2024-03-19_20_49_24/lr_0.0001_g_0.99_ns_2048_.zip',
+    'n_eval_episodes': 5,
     'map_dir': 'maps/generated/all_4X4',
-    'success_map_target': 'test_result/PPO/success'
+    'success_map_target': 'test/A2C/success_a2c_sample100_75000'
 }
 
 Default_Evaluate_Input = {

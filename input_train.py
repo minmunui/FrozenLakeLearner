@@ -4,15 +4,15 @@ Description : This file contains the default input for the model, you can edit t
 from utils.utils import get_merge_dictionary
 
 User_Train_Input = {
-    'model_name': '',
+    'model_name': 'A2C_single_77000',
     'model_target': '',
-    'map_path': 'maps/_4X4_custom.txt',
+    'map_path': 'maps/_4X4_custom2.txt',
     'map_size': '',
     'log_target': '',
     'algorithm': {
         'name': 'A2C',
         'hyperparameters': {
-            'total_timesteps': 300,
+            'total_timesteps': 77000,
             'learning_rate': 0.0001,
             'batch_size': 64,
             'gamma': 0.99,
