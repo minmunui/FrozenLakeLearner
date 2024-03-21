@@ -59,7 +59,7 @@ def simulate_command(option: dict = None):
     print("detected env options", env_options)
 
     env = make_env(map_path=env_options['map_path'], gui=True,
-                   env_class=env_class)
+                   env_class=env_class, render_fps=env_options['render_fps'])
 
     model_path = env_options['model_path']
 
@@ -69,6 +69,23 @@ def simulate_command(option: dict = None):
     # evaluate model
 
     print_evaluate(env=env, model=loaded_model)
+
+
+def iter_simulate_command(option: dict = None):
+    env_options = option
+    print("detected env options", env_options)
+
+    map_dir = env_options['map_dir']
+    map_names = load_map_name(env_options['map_dir'])
+
+    for map_name in map_names:
+        env = make_env(map_path=f"{map_dir}/{map_name}", gui=True,
+                       env_class=env_class, render_fps=env_options['render_fps'])
+        model_path = env_options['model_path']
+        print("model path : ", model_path)
+        loaded_model = get_algorithm(env_options['algorithm']).load(model_path)
+        print(f"Simulating on map {map_name}")
+        print_evaluate(env=env, model=loaded_model)
 
 
 def evaluate_command(option: dict = None):

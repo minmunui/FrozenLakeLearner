@@ -5,9 +5,10 @@ from utils.process_IO import create_directory_if_not_exists
 from utils.utils import current_time_for_file
 
 
-def make_env(map_path, gui: bool = False, env_class=None, truncate=False):
+def make_env(map_path, gui: bool = False, env_class=None, truncate: bool = False, render_fps: int = 6):
     """
     This function is used to make the environment
+    :param render_fps: fps for rendering the environment
     :param map_path: map to be used for the environment
     :param gui: if True then render the environment
     :param env_class:  class of the environment
@@ -22,7 +23,7 @@ def make_env(map_path, gui: bool = False, env_class=None, truncate=False):
     if env_class is None:
         raise ValueError("env_class is None")
     render_mode = 'human' if gui else None
-    env = env_class(desc=map_for_env, map_name=None, is_slippery=False, render_mode=render_mode, truncate=truncate)
+    env = env_class(desc=map_for_env, map_name=None, is_slippery=False, render_mode=render_mode, truncate=truncate, render_fps=render_fps)
     return env
 
 

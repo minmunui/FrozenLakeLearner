@@ -4,9 +4,10 @@ from gymnasium.envs.toy_text.frozen_lake import FrozenLakeEnv
 
 class FixedGridFrozenLake(FrozenLakeEnv):
     def __init__(self, **kwargs):
-        self.truncate = kwargs.get('truncate', False)
-        kwargs.pop('truncate', None)
+        self.truncate = kwargs.pop('truncate', False)
+        self.render_fps = kwargs.pop('render_fps', 6)
         super().__init__(**kwargs)
+        self.metadata['render_fps'] = self.render_fps
 
         self.observation_space = spaces.Dict({
             'current': spaces.MultiDiscrete([self.nrow, self.ncol]),

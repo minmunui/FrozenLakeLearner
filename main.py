@@ -14,7 +14,7 @@ import sys
 from input_evaluate import evaluate_input
 from input_simulate import simulate_input
 
-from src.evaluate import evaluate_command, simulate_command
+from src.evaluate import evaluate_command, simulate_command, iter_simulate_command
 from src.iterate import iterate_command
 from src.train import train_command
 from utils.generate_maps import generate_all_map
@@ -30,6 +30,9 @@ def main():
 
     elif command == "simulate":
         simulate_command(option=simulate_input())
+
+    elif command == "iter-simulate":
+        iter_simulate_command(option=simulate_input())
 
     elif command == "iterate":
         iterate_command()
