@@ -3,7 +3,6 @@ from datetime import datetime
 
 import gymnasium as gym
 
-from input_iterate import iterate_input
 from src.env import make_env, load_map
 from src.model import get_algorithm, prune_hyperparameters
 from src.setup import env_class
@@ -69,25 +68,24 @@ def iterate(
     return model
 
 
-def iterate_command():
-    iterate_option = iterate_input()
-    print("detected iterate options", iterate_option)
-    algorithm = iterate_option['algorithm']['name']
-    hyperparameters = iterate_option['algorithm']['hyperparameters']
+def iterate_command(options: dict):
+    print("detected iterate options", options)
+    algorithm = options['algorithm']['name']
+    hyperparameters = options['algorithm']['hyperparameters']
 
-    if iterate_option['map_dir'] == '':
+    if options['map_dir'] == '':
         map_dir = 'maps/train'
     else:
-        map_dir = iterate_option['map_dir']
+        map_dir = options['map_dir']
 
-    model_name = iterate_option['model_name']
-    model_target = iterate_option['model_target']
-    log_target = iterate_option['log_target']
+    model_name = options['model_name']
+    model_target = options['model_target']
+    log_target = options['log_target']
 
     iterate(
         map_dir=map_dir,
         algorithm=algorithm,
-        sample_num=iterate_option['sample_map'],
+        sample_num=options['sample_map'],
         model_target=model_target,
         model_name=model_name,
         hyperparameters=hyperparameters,

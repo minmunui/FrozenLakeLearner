@@ -12,6 +12,7 @@ Usage:
 import sys
 
 from input_evaluate import evaluate_input
+from input_iterate import iterate_input
 from input_simulate import simulate_input
 
 from src.evaluate import evaluate_command, simulate_command, iter_simulate_command
@@ -29,18 +30,28 @@ def main():
         evaluate_command(option=evaluate_input())
 
     elif command == "simulate":
-        simulate_command(option=simulate_input())
+         simulate_command(option=simulate_input())
 
     elif command == "iter-simulate":
         iter_simulate_command(option=simulate_input())
 
     elif command == "iterate":
-        iterate_command()
+        iterate_command(options=iterate_input())
 
     elif command == "generate":
         [n_row, n_col] = sys.argv[2].split('X')
         print(f"Generating all possible maps of size {n_row}x{n_col}")
         generate_all_map(int(n_col), int(n_row))
+
+    elif command == "hp-iterate":
+        print("Hyperparameter iteration")
+        option = iterate_input()
+        unit = option['algorithm']['hyperparameters']['total_timesteps']
+        for i in range(10):
+            option['model_name'] = f"{option['model_name']}_{unit * (i + 1)}"
+            option['model_target'] = f"{option['model_target']}_{unit * (i + 1)}"
+            option['algorithm']['hyperparameters']['total_timesteps'] = unit * (i + 1)
+            iterate_command(options=option)
 
     else:
         print("Invalid command | Please use 'train', 'evaluate' or 'simulate' as command")
