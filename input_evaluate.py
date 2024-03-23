@@ -5,10 +5,10 @@ from utils.utils import get_merge_dictionary
 
 User_Evaluate_Input = {
     'algorithm': 'A2C',
-    'model_path': 'models/A2C/iterate_2024-03-21_08_28_29/A2C_All_20000.zip',
+    'model_path': 'models/A2C/iterate_2024-03-23_12_53_14/A2C_All_30000_v2.zip',
     'n_eval_episodes': 5,
     'map_dir': 'maps/generated/all_4X4',
-    'success_map_target': 'test/A2C/success_A2C_all_20000'
+    'success_map_target': 'test/A2C/success_A2C_all_30000_v2'
 }
 
 Default_Evaluate_Input = {

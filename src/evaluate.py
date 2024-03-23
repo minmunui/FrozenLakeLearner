@@ -97,7 +97,7 @@ def evaluate_command(option: dict = None):
                                          success_map_target=env_options['success_map_target'])
     print("Evaluation complete")
     print("Model : ", env_options['model_path'])
-    print(f"Success Case : {result} | {n_success} / {len(load_map_name(env_options['map_dir']))}")
+    print(f"Success Case : {n_success/len(load_map_name(env_options['map_dir']))} | {n_success} / {len(load_map_name(env_options['map_dir']))}")
     if env_options['success_map_target'] is None or "":
         print("Success maps not saved")
     print("Success maps saved at : ", env_options['success_map_target'])
