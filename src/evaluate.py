@@ -39,7 +39,7 @@ def total_evaluation(model, map_dir: str, success_map_target: str = None):
         mean_reward, _ = evaluate_model(model, env, n_eval_episodes=1)
         if mean_reward == 1:
             n_success_input += 1
-            if success_map_target is not None:
+            if success_map_target is not None and success_map_target != "":
                 src_path = f"{map_dir}/{map_name}"
                 dst_path = f"{success_map_target}/{map_name}"
                 shutil.copy2(src_path, dst_path)
@@ -91,7 +91,8 @@ def iter_simulate_command(option: dict = None):
 def evaluate_command(option: dict = None):
     env_options = option
     loaded_model = get_algorithm(env_options['algorithm']).load(env_options['model_path'])
-    create_directory_if_not_exists(env_options['success_map_target'])
+    if env_options['success_map_target'] is not None and env_options['success_map_target'] != "":
+        create_directory_if_not_exists(env_options['success_map_target'])
     result, n_success = total_evaluation(loaded_model,
                                          map_dir=env_options['map_dir'],
                                          success_map_target=env_options['success_map_target'])
