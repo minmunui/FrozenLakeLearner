@@ -29,22 +29,22 @@ def prune_hyperparameters(hyperparameters: dict, algorithm: str):
     :return: pruned hyperparameters
     """
     if algorithm == 'DQN':
-        hyperparameters.pop('n_steps')
+        hyperparameters.pop('n_steps', None)
         print("n_steps removed from hyperparameters for DQN")
     elif algorithm == 'A2C':
-        hyperparameters.pop('batch_size')
+        hyperparameters.pop('batch_size', None)
         print("batch_size removed from hyperparameters for A2C")
     elif algorithm == 'SAC':
         hyperparameters.pop('n_steps')
-        hyperparameters.pop('batch_size')
+        hyperparameters.pop('batch_size', None)
         print("n_steps and batch_size removed from hyperparameters for SAC")
     elif algorithm == 'TD3':
         hyperparameters.pop('n_steps')
-        hyperparameters.pop('batch_size')
+        hyperparameters.pop('batch_size', None)
         print("n_steps and batch_size removed from hyperparameters for TD3")
     elif algorithm == 'DDPG':
         hyperparameters.pop('n_steps')
-        hyperparameters.pop('batch_size')
+        hyperparameters.pop('batch_size', None)
         print("n_steps and batch_size removed from hyperparameters for DDPG")
     return hyperparameters
 
