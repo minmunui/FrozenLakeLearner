@@ -38,7 +38,7 @@ def train_model(
     agent_hyperparameters = prune_hyperparameters(hyperparameters, algorithm)
 
     model = make_model("MultiInputPolicy", env, verbose=1, tensorboard_log=log_target, **agent_hyperparameters)
-
+    print(f"env : {env.observation_space}")
     model.learn(total_timesteps=timesteps)
     if save:
         model.save(f"{model_target}/{model_name}")

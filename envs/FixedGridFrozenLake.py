@@ -6,6 +6,7 @@ class FixedGridFrozenLake(FrozenLakeEnv):
     def __init__(self, **kwargs):
         self.truncate = kwargs.pop('truncate', False)
         self.render_fps = kwargs.pop('render_fps', 6)
+        self.hole_penalty = kwargs.pop('hole_penalty', 0.0)
         super().__init__(**kwargs)
         self.metadata['render_fps'] = self.render_fps
 
@@ -20,7 +21,6 @@ class FixedGridFrozenLake(FrozenLakeEnv):
         self.n_step = 0
 
         self.map = [[True] * self.ncol for _ in range(self.nrow)]
-        print(self.desc)
         for i in range(self.nrow):
             for j in range(self.ncol):
                 if self.desc[i][j] == b'H':
@@ -39,6 +39,9 @@ class FixedGridFrozenLake(FrozenLakeEnv):
         if self.truncate and self.n_step >= self.step_limit:
             done = True
             truncated = True
+        if self.desc[current[0]][current[1]] == b'H':
+            reward = self.hole_penalty
+        # print(f"current: {current}, goal: {self.goal}, map: {self.map}", reward, done, truncated, info)
         return {'current': current, 'goal': self.goal, 'map': self.map}, reward, done, truncated, info
 
     def reset(self, **kwargs):
