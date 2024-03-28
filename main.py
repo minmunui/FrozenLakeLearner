@@ -52,9 +52,6 @@ def main():
             option['model_target'] = f"{option['model_target']}_{unit * (i + 1)}"
             option['algorithm']['hyperparameters']['total_timesteps'] = unit * (i + 1)
             iterate_command(options=option)
-    elif command == "play":
-        print("Play the game")
-        play()
     else:
         print("Invalid command | Please use 'train', 'evaluate' or 'simulate' as command")
         return

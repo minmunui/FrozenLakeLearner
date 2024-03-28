@@ -17,7 +17,9 @@ class FixedGridFrozenLake(FrozenLakeEnv):
         })
         # goal은 desc에서 G의 위치
         self.goal = self._find_goal()
-        self.step_limit = self.ncol * self.nrow * 2
+        self.start = self._find_start()
+        self.current = self.start
+        self.step_limit = self.ncol * self.nrow * 4
         self.n_step = 0
 
         self.map = [[True] * self.ncol for _ in range(self.nrow)]
@@ -30,6 +32,12 @@ class FixedGridFrozenLake(FrozenLakeEnv):
         for i in range(self.nrow):
             for j in range(self.ncol):
                 if self.desc[i][j] == b'G':
+                    return i, j
+
+    def _find_start(self):
+        for i in range(self.nrow):
+            for j in range(self.ncol):
+                if self.desc[i][j] == b'S':
                     return i, j
 
     def step(self, a):
@@ -46,5 +54,5 @@ class FixedGridFrozenLake(FrozenLakeEnv):
 
     def reset(self, **kwargs):
         super().reset(**kwargs)
-        current = (self.s // self.ncol, self.s % self.ncol)
-        return {'current': current, 'goal': self.goal, 'map': self.map}, {}
+        self.current = self.start
+        return {'current': self.current, 'goal': self.goal, 'map': self.map}, {}

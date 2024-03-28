@@ -4,10 +4,10 @@ This file is used to simulate the input from the user.
 from utils.utils import get_merge_dictionary
 
 User_Simulate_Input = {
-    'algorithm': 'A2C',
-    'model_path': 'models/A2C/iterate_2024-03-21_08_28_29/A2C_All_20000.zip',
-    'map_path': 'maps/_4X4_custom2.txt',
-    'map_dir': 'test/A2C/success_20000',
+    'algorithm': 'PPO',
+    'model_path': 'models/PPO/_4X4_simple/PPO_simple_50000_00.zip',
+    'map_path': 'maps/_4X4_simple.txt',
+    'map_dir': 'maps/generated/all_4X4',
     'render_fps': 1,
 }
 

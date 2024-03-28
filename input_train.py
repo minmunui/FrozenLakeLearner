@@ -4,15 +4,15 @@ Description : This file contains the default input for the model, you can edit t
 from utils.utils import get_merge_dictionary
 
 User_Train_Input = {
-    'model_name': 'A2C_single_200000_v2',
-    'model_target': '',
-    'map_path': 'maps/_4X4_custom2.txt',
+    'model_name': 'PPO_simple_900000_00',
+    'model_target': 'models/simple_vs_random',
+    'map_path': 'maps/_4X4_simple.txt',
     'map_size': '',
-    'log_target': '',
+    'log_target': 'logs/3_27_iter/simple/PPO/900000_00',
     'algorithm': {
-        'name': 'A2C',
+        'name': 'PPO',
         'hyperparameters': {
-            'total_timesteps': 200000,
+            'total_timesteps': 900000,
             'learning_rate': 0.0001,
             'batch_size': 64,
             'gamma': 0.99,
