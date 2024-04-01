@@ -4,15 +4,15 @@ Description : This file contains the default input for the model, you can edit t
 from utils.utils import get_merge_dictionary
 
 User_Train_Input = {
-    'model_name': 'PPO_simple_900000_00',
+    'model_name': 'PPO_random60_120M_00',
     'model_target': 'models/simple_vs_random',
     'map_path': 'maps/_4X4_simple.txt',
     'map_size': '',
-    'log_target': 'logs/3_27_iter/simple/PPO/900000_00',
+    'log_target': 'logs/overfit/random60/PPO/120M_00',
     'algorithm': {
         'name': 'PPO',
         'hyperparameters': {
-            'total_timesteps': 900000,
+            'total_timesteps': 120_000_000,
             'learning_rate': 0.0001,
             'batch_size': 64,
             'gamma': 0.99,

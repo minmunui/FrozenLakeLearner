@@ -4,15 +4,15 @@ Description : This file contains the default input for the model, you can edit t
 from utils.utils import get_merge_dictionary
 
 User_Iterate_Input = {
-    'model_name': 'iter_A2C_02',  # name of the model to save
-    'model_target': 'iter/A2C/02',  # directory to save the model
+    'model_name': 'iter_A2C_30000',  # name of the model to save
+    'model_target': 'iter/A2C_30000',  # directory to save the model
     'map_dir': 'maps/generated/all_4X4',  # path to the directory containing the maps
-    'log_target': 'log/iter/A2C20000',  # path to the directory to save the logs\
+    'log_target': 'log/iter/A2C30000',  # path to the directory to save the logs\
     'sample_map': 0,  # number of maps to sample from the map_dir if 0 then all maps will be used
     'algorithm': {  # algorithm to use for training
         'name': 'A2C',
         'hyperparameters': {
-            'total_timesteps': 10000*3828,
+            'total_timesteps': 30000*3828,
             'learning_rate': 0.0001,
             'batch_size': 64,
             'gamma': 0.99,
