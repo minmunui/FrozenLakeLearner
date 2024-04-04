@@ -4,11 +4,11 @@ Description : This file contains the default input for the model, you can edit t
 from utils.utils import get_merge_dictionary
 
 User_Evaluate_Input = {
-    'algorithm': 'PPO',
-    'model_path': 'models/simple_vs_random/PPO_random045_10000000_02.zip',
+    'algorithm': 'A2C',
+    'model_path': 'models/overfit/A2C_random60_2600K_00.zip',
     'n_eval_episodes': 5,
     'map_dir': 'maps/generated/all_4X4',
-    'success_map_target': ''
+    'success_map_target': 'a2c_random60_2600K_success'
 }
 
 Default_Evaluate_Input = {

@@ -16,6 +16,7 @@ from input_iterate import iterate_input
 from input_simulate import simulate_input
 
 from src.evaluate import evaluate_command, simulate_command, iter_simulate_command
+from src.heatmap import heatmap_command
 from src.iterate import iterate_command
 from src.train import train_command
 from utils.generate_maps import generate_all_map
@@ -25,6 +26,9 @@ def main():
     command = sys.argv[1]
     if command == "train":
         train_command()
+
+    elif command == "heatmap":
+        heatmap_command()
 
     elif command == "evaluate":
         evaluate_command(option=evaluate_input())
