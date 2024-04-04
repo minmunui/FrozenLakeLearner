@@ -4,15 +4,15 @@ Description : This file contains the default input for the model, you can edit t
 from utils.utils import get_merge_dictionary
 
 User_Train_Input = {
-    'model_name': 'A2C_random60_5000K_00',
-    'model_target': 'models/overfit',
+    'model_name': 'text',
+    'model_target': 'text',
     'map_path': 'maps/_4X4_simple.txt',
     'map_size': '',
-    'log_target': 'logs/overfit/random60/A2C/5000K_00',
+    'log_target': 'test',
     'algorithm': {
-        'name': 'A2C',
+        'name': 'PPO',
         'hyperparameters': {
-            'total_timesteps': 5_000_000,
+            'total_timesteps': 1_000_000,
             'learning_rate': 0.0001,
             'batch_size': 64,
             'gamma': 0.99,
@@ -28,7 +28,7 @@ Default_Train_Input = {
     'algorithm': {
         'name': 'PPO',
         'hyperparameters': {
-            'total_timesteps': 50000,
+            'total_timesteps': 400000,
             'learning_rate': 0.0001,
             'batch_size': 64,
             'gamma': 0.99,

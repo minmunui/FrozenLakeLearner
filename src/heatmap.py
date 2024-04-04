@@ -52,6 +52,3 @@ def heatmap_command():
     cumulative_counts = accumulate_F_counts_in_folder(folder_path)
     print("cumulative_counts : \n", cumulative_counts)
     draw_heatmap(cumulative_counts)
-
-
-heatmap_command()
