@@ -1,3 +1,5 @@
+import gymnasium
+
 from input_train import train_input
 from src.env import make_env
 from src.model import get_algorithm, prune_hyperparameters
@@ -7,17 +9,19 @@ from utils.process_IO import create_directory_if_not_exists, get_model_name, get
 
 
 def train_model(
-        env=None,
+        env : gymnasium.Env=None,
         algorithm: str = "PPO",
         model_target: str = "",
         model_name: str = "new_model",
         hyperparameters: dict = None,
         log_target: str = "",
-        save: bool = True
+        save: bool = True,
+        evaluate_interval: int = 10_000
 ):
     """
     train the model using the given algorithm and env
     then save the model with the given name
+    :param evaluate_interval: interval to evaluate the model
     :param env: gym environment
     :param algorithm: algorithm to use for training
     :param model_target: path to the directory to save the model
