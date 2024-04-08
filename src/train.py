@@ -9,7 +9,7 @@ from utils.process_IO import create_directory_if_not_exists, get_model_name, get
 
 
 def train_model(
-        env : gymnasium.Env=None,
+        env: gymnasium.Env = None,
         algorithm: str = "PPO",
         model_target: str = "",
         model_name: str = "new_model",
@@ -42,6 +42,7 @@ def train_model(
     agent_hyperparameters = prune_hyperparameters(hyperparameters, algorithm)
 
     model = make_model("MultiInputPolicy", env, verbose=1, tensorboard_log=log_target, **agent_hyperparameters)
+    print(model.policy_kwargs)
     print(f"env : {env.observation_space}")
     model.learn(total_timesteps=timesteps)
     if save:

@@ -12,11 +12,14 @@ User_Train_Input = {
     'algorithm': {
         'name': 'PPO',
         'hyperparameters': {
-            'total_timesteps': 1_000_000,
+            'total_timesteps': 100_000,
             'learning_rate': 0.0001,
             'batch_size': 64,
             'gamma': 0.99,
             'n_steps': 2048,
+            'policy_kwargs': dict(
+                net_arch=[128, 128]
+            )
         }
     },
 }
