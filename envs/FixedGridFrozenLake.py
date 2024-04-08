@@ -49,7 +49,6 @@ class FixedGridFrozenLake(FrozenLakeEnv):
             truncated = True
         if self.desc[current[0]][current[1]] == b'H':
             reward = self.hole_penalty
-            print("Hole")
         # print(f"current: {current}, goal: {self.goal}, map: {self.map}", reward, done, truncated, info)
         return {'current': current, 'goal': self.goal, 'map': self.map}, reward, done, truncated, info
 
