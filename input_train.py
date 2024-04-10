@@ -2,23 +2,24 @@
 Description : This file contains the default input for the model, you can edit the input as per your requirements.
 """
 from utils.utils import get_merge_dictionary
-
+import torch
 User_Train_Input = {
-    'model_name': 'text',
-    'model_target': 'text',
+    'model_name': 'PPO_64x4_100M_pn00',
+    'model_target': 'network48/',
     'map_path': 'maps/_4X4_simple.txt',
     'map_size': '',
-    'log_target': 'test',
+    'log_target': 'network410/PPO_64x4_100M_pn00_06',
     'algorithm': {
         'name': 'PPO',
         'hyperparameters': {
-            'total_timesteps': 100_000,
+            'total_timesteps': 100_000_000,
             'learning_rate': 0.0001,
             'batch_size': 64,
             'gamma': 0.99,
             'n_steps': 2048,
             'policy_kwargs': dict(
-                net_arch=[128, 128]
+                activation_fn=torch.nn.ReLU,
+                net_arch=[64, 64, 64, 64, 64]
             )
         }
     },

@@ -2,7 +2,7 @@ import numpy as np
 from gymnasium.envs.toy_text.frozen_lake import generate_random_map, LEFT, DOWN, RIGHT, UP
 
 from env_setting import env_setting
-from envs.Fixed1DFrozenLake import Fixed1DFrozenLake
+from envs.boolean.Fixed1DFrozenLake import Fixed1DFrozenLake
 
 
 class RandomMapFrozenLake(Fixed1DFrozenLake):

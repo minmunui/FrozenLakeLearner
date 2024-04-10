@@ -5,10 +5,10 @@ from utils.utils import get_merge_dictionary
 
 User_Evaluate_Input = {
     'algorithm': 'A2C',
-    'model_path': 'models/overfit/A2C_random60_10M_01.zip',
+    'model_path': 'network48/A2C_64x4_100M_pn00.zip',
     'n_eval_episodes': 5,
     'map_dir': 'maps/generated/all_4X4',
-    'success_map_target': 'a2c_random60_5000K_success'
+    'success_map_target': ''
 }
 
 Default_Evaluate_Input = {
