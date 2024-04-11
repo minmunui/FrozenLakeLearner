@@ -3,6 +3,7 @@ from envs.boolean.Fixed1DFrozenLake import Fixed1DFrozenLake
 from envs.boolean.FixedGridFrozenLake import FixedGridFrozenLake
 from envs.boolean.RandomMapFrozenLake import RandomMapFrozenLake
 from envs.discrete.Fixed1DFrozenLakeDiscrete import Fixed1DFrozenLakeDiscrete
+from envs.discrete.RandomMapDiscreteShrinkDimension import RandomMapDiscreteShrinkDimension
 from envs.discrete.RandomMapFrozenLakeDiscrete import RandomMapFrozenLakeDiscrete
 
 
@@ -20,5 +21,7 @@ def env_class(**kwargs):
         return Fixed1DFrozenLakeDiscrete(**kwargs, hole_penalty=env_params["hole_penalty"])
     elif env_params["env_str"] == "discreteRandom":
         return RandomMapFrozenLakeDiscrete(**kwargs, hole_penalty=env_params["hole_penalty"])
+    elif env_params["env_str"] == "discreteRandomShrink":
+        return RandomMapDiscreteShrinkDimension(**kwargs, hole_penalty=env_params["hole_penalty"])
     else:
         raise ValueError(f"Invalid environment class : {str}")

@@ -42,15 +42,15 @@ class FixedGridFrozenLake(FrozenLakeEnv):
 
     def step(self, a):
         obs, reward, done, truncated, info = super().step(a)
-        current = (self.s // self.ncol, self.s % self.ncol)
+        self.current = (self.s // self.ncol, self.s % self.ncol)
         self.n_step += 1
         if self.truncate and self.n_step >= self.step_limit:
             done = True
             truncated = True
-        if self.desc[current[0]][current[1]] == b'H':
+        if self.desc[self.current[0]][self.current[1]] == b'H':
             reward = self.hole_penalty
         # print(f"current: {current}, goal: {self.goal}, map: {self.map}", reward, done, truncated, info)
-        return {'current': current, 'goal': self.goal, 'map': self.map}, reward, done, truncated, info
+        return {'current': self.current, 'goal': self.goal, 'map': self.map}, reward, done, truncated, info
 
     def reset(self, **kwargs):
         super().reset(**kwargs)

@@ -39,6 +39,8 @@ class RandomMapFrozenLake(Fixed1DFrozenLake):
             reward = float(newletter == b"G")
             return newstate, reward, terminated
 
+        self.map = [True] * self.nrow * self.ncol
+
         for row in range(self.nrow):
             for col in range(self.ncol):
                 s = to_s(row, col)
@@ -47,6 +49,8 @@ class RandomMapFrozenLake(Fixed1DFrozenLake):
                     letter = self.desc[row, col]
                     if letter in b"GH":
                         li.append((1.0, s, 0, True))
+                        if letter == b'H':
+                            self.map[row * self.ncol + col] = False
                     else:
                         li.append((1.0, *update_probability_matrix(row, col, a)))
 

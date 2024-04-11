@@ -11,6 +11,7 @@ class RandomMapFrozenLakeDiscrete(Fixed1DFrozenLakeDiscrete):
         self.goal = self._find_goal()
         self.start = self._find_start()
         self.current = self.start
+        self.map = [1] * self.nrow * self.ncol
 
         nA = 4
         nS = self.nrow * self.ncol
@@ -47,6 +48,8 @@ class RandomMapFrozenLakeDiscrete(Fixed1DFrozenLakeDiscrete):
                     letter = self.desc[row, col]
                     if letter in b"GH":
                         li.append((1.0, s, 0, True))
+                        if letter == b'H':
+                            self.map[row * self.ncol + col] = 0
                     else:
                         li.append((1.0, *update_probability_matrix(row, col, a)))
 
@@ -56,5 +59,4 @@ class RandomMapFrozenLakeDiscrete(Fixed1DFrozenLakeDiscrete):
 
     def step(self, a):
         obs, reward, done, truncated, info = super().step(a)
-
         return obs, reward, done, truncated, info

@@ -5,7 +5,6 @@ from envs.boolean.FixedGridFrozenLake import FixedGridFrozenLake
 class Fixed1DFrozenLake(FixedGridFrozenLake):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
         self.observation_space = spaces.Dict({
             'current': spaces.MultiDiscrete([self.nrow, self.ncol]),
             'goal': spaces.MultiDiscrete([self.nrow, self.ncol]),

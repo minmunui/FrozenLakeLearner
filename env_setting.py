@@ -1,6 +1,6 @@
 def env_setting():
     return {
-        "env_str": "discreteRandom",  # 1d, 2d, random, discrete1d, discreteRandom
-        "hole_penalty": -0.0,
-        "frozen_prob": 0.8,
+        "env_str": "discreteRandomShrink",  # 1d, 2d, random, discrete1d, discreteRandom, discreteRandomShrink
+        "hole_penalty": -0.4,
+        "frozen_prob": 0.7,
     }
