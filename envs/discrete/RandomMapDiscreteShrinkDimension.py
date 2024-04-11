@@ -13,7 +13,7 @@ class RandomMapDiscreteShrinkDimension(RandomMapFrozenLakeDiscrete):
         super().reset(**kwargs)
         self.map[self.current[0] * self.ncol + self.current[1]] = 2
         self.map[self.goal[0] * self.ncol + self.goal[1]] = 3
-        return self.map
+        return {"map": self.map}, {}
 
     def step(self, a):
         self.map[self.current[0] * self.ncol + self.current[1]] = 1
