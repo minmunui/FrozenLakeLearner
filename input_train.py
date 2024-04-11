@@ -4,23 +4,23 @@ Description : This file contains the default input for the model, you can edit t
 from utils.utils import get_merge_dictionary
 import torch
 User_Train_Input = {
-    'model_name': 'PPO_64x2_60M',
-    'model_target': 'network411/',
+    'model_name': 'A2C_128x3_60M',
+    'model_target': 'network411/shrink',
     'map_path': 'maps/_4X4_simple.txt',
     'map_size': '',
-    'log_target': 'network411/PPO_64x2_60M',
+    'log_target': 'network411/shrink/A2C_128x3_60M',
     'algorithm': {
-        'name': 'PPO',
+        'name': 'A2C',
         'hyperparameters': {
             'total_timesteps': 60_000_000,
             'learning_rate': 0.0001,
             'batch_size': 64,
             'gamma': 0.99,
             'n_steps': 2048,
-            # 'policy_kwargs': dict(
-            #     # activation_fn=torch.nn.ReLU,
-            #     # net_arch=[64, 64, 64, 64, 64]
-            # )
+            'policy_kwargs': dict(
+                # activation_fn=torch.nn.ReLU,
+                net_arch=[128, 128, 128]
+            )
         }
     },
 }
